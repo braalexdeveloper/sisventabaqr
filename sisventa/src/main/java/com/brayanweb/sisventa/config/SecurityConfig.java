@@ -28,7 +28,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
           .csrf(csrf->csrf.disable())
-          
+           .cors(cors -> cors.configurationSource(request -> {
+                CorsConfiguration config = new CorsConfiguration();
+                config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://example.com")); // Lista explícita de orígenes permitidos
+                config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+                config.setAllowCredentials(true); // Permitir credenciales
+                return config;
+            }))
           .authorizeHttpRequests(
           authRequest->authRequest
                   .requestMatchers("/api/auth/**").permitAll()

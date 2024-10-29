@@ -9,6 +9,10 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,11 +24,16 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    public List<ClientResponse> getClients() {
-        List<ClientResponse> clientsResponse = clientRepository.findAll().stream()
-                .map(this::convertToClientResponse).collect(Collectors.toList());
-
-        return clientsResponse;
+    public Page<ClientResponse> getClients(int page,int size,String sortBy) {
+        
+         // Define el objeto Pageable con la página, tamaño de página y ordenación
+        Pageable pageable=PageRequest.of(page,size,Sort.by(Sort.Direction.DESC,sortBy));
+        
+        // Obtén una página de clientes desde el repositorio
+        Page<Client> clientsPage=clientRepository.findAll(pageable);
+        
+        // Convierte la página de entidades a una página de respuestas
+        return clientsPage.map(this::convertToClientResponse);
     }
 
     public ClientResponse getClient(Long id) {

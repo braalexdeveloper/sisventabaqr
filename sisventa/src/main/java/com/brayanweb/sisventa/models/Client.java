@@ -28,7 +28,7 @@ public class Client {
    @Column(nullable=false,unique=true)
    private String dni;
    
-   @Column(nullable=false,unique=true)
+   
    private String ruc;
    
    private String phone;

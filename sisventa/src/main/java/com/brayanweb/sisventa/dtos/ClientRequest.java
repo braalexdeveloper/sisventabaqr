@@ -10,10 +10,12 @@ public class ClientRequest {
     
     @NotNull(message="El nombre es requerido")
     @Size(min = 2, max = 50)
+    @Pattern(regexp = "^[a-zA-ZÀ-ÿ\\s]+$", message = "El nombre solo puede contener letras")
     private String name;
     
     @NotNull(message="El apellido es requerido")
     @Size(min = 2, max = 50)
+    @Pattern(regexp = "^[a-zA-ZÀ-ÿ\\s]+$", message = "El nombre solo puede contener letras")
     private String lastName;
     
     @NotNull(message="El dni es requerido")
