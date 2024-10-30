@@ -7,6 +7,7 @@ import com.brayanweb.sisventa.models.Client;
 import com.brayanweb.sisventa.repositories.ClientRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
@@ -40,6 +41,17 @@ public class ClientService {
         Client client = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException("Cliente no enconrado"));
 
         return convertToClientResponse(client);
+    }
+    
+    public ClientResponse getClientByDniOrRuc(String value){
+        Optional<Client> client=clientRepository.findByDniOrRuc(value,value);
+        
+        if(client.isPresent()){
+            return convertToClientResponse(client.get());
+        }else{
+            throw new ClientNotFoundException("Client no encontrado");
+        }
+        
     }
 
     public ClientResponse create(ClientRequest clientRequest) {

@@ -57,7 +57,8 @@ public class ClientController {
     
     @GetMapping("/{dniOrRuc}")
     public ResponseEntity<Map<String,Object>> getClientByDniOrRuc(@PathVariable("dniOrRuc") String dniOrRuc){
-        
+        ClientResponse client=clientService.getClientByDniOrRuc(dniOrRuc);
+        return ResponseEntity.ok(createResponse("success","client",client));
     }
 
     @PostMapping
