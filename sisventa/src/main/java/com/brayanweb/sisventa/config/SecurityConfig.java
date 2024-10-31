@@ -2,6 +2,7 @@
 package com.brayanweb.sisventa.config;
 
 import com.brayanweb.sisventa.jwt.JwtAuthenticationFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -2,6 +2,7 @@ package com.brayanweb.sisventa.controlles;
 
 import com.brayanweb.sisventa.dtos.ClientRequest;
 import com.brayanweb.sisventa.dtos.ClientResponse;
+import com.brayanweb.sisventa.exceptions.ClientNotFoundException;
 import com.brayanweb.sisventa.services.ClientService;
 import jakarta.validation.Valid;
 import java.util.HashMap;
@@ -51,11 +52,13 @@ public class ClientController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getClient(@PathVariable("id") Long id) {
+       
         ClientResponse client = clientService.getClient(id);
         return ResponseEntity.ok(createResponse("succes", "client", client));
+       
     }
     
-    @GetMapping("/{dniOrRuc}")
+    @GetMapping("/search/{dniOrRuc}")
     public ResponseEntity<Map<String,Object>> getClientByDniOrRuc(@PathVariable("dniOrRuc") String dniOrRuc){
         ClientResponse client=clientService.getClientByDniOrRuc(dniOrRuc);
         return ResponseEntity.ok(createResponse("success","client",client));
